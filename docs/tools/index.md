@@ -3,6 +3,8 @@
      - [模拟器使用方法](simulators.md) - Ramulator2、Olive 等体系结构模拟器
      - [lm_eval_harness 使用方法](lm_eval_harness.md) - 大模型评估框架
 
+        date924
+
     **可量化的数据：**
     - 精度
     - xx工艺/xx综合工具下的面积
