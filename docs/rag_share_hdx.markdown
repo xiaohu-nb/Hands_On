@@ -1,3 +1,4 @@
+![alt text](./images/image-24(2).png)
 # HeterRAG 异构 PIM 加速 RAG 系统
 ## 1.&nbsp;   研究背景
 
@@ -17,6 +18,7 @@ RAG面临问题挑战：
 2. **DIMM-PIM 方案：** 拥有大容量、低成本，适合解决“容量瓶颈”；但其带宽远低于 HBM，无法满足“带宽瓶颈” 。<br>
 
 > **补充知识：有关 DIMM 与 HBM 的介绍**  
+> **PIM**：存内计算（Processing-In-Memory, PIM）<br>
 > 基于 **DIMM** 的 PIM：DIMM 采用 DDR 芯片的二维布局，从而降低制造成本，使用户能够以实惠的价格获得大容量内存。  
 > 基于 **HBM** 的 PIM：HBM 采用 3D 堆叠结构，通过 TSV 垂直连接，带来高带宽、低延迟和低功耗，但制造成本较高。
 
@@ -67,7 +69,7 @@ AccelDIMM 专为 ANNS（近似最近邻搜索）操作设计。ANNS 包含多个
 2.卸载的任务：<br>
 **• 距离计算**: 这是 ANNS 中计算最密集且最易并行的部分。因此，内存卸载严格限制 (restricted) 在此操作。
 ### 2. 整体架构
-![alt text](./images/image-6.png)<br>
+![<alt text>](./images/image-25(2).png)<br>
 **1.顶层处理模块 (Top-level Processing Module)**<br>
 TPM 是 AccelDIMM 的总控制中心，负责管理整个 ANNS 流程。
 构成主要包含指令队列、指令解码器 和 功能块 (FB)。
@@ -104,15 +106,16 @@ TPM 是 AccelHBM 的“大脑”和“本地计算单元”，其内部的功能
 <p align="center">
   <img src="./images/image-8.png" alt="图片说明" width=200"/>
 </p>
+
 ### 3.PIM-enabled HBM <br>
 负责存储模型权重、KV 缓存，并在内存中就地执行 GEMV。<br>
 1.关键架构差异 (vs. AccelDIMM)：
 
-**AccelDIMM (检索)：** 由于 ANNS 访问模式稀疏，采用 Rank-level (Rank 级) 部署计算单元。
+&nbsp; &nbsp; &nbsp; **AccelDIMM (检索)：** 由于 ANNS 访问模式稀疏，采用 Rank-level (Rank 级) 部署计算单元。
 
-**AccelHBM (生成)：** 为了最大化计算效率，借鉴 Newton等先进设计，采用 Bank-level (Bank 级) 部署处理模块。
+&nbsp; &nbsp; &nbsp; **AccelHBM (生成)：** 为了最大化计算效率，借鉴 Newton等先进设计，采用 Bank-level (Bank 级) 部署处理模块。
 
-Bank 级处理模块 (BPM)：
+&nbsp; &nbsp; &nbsp; **Bank 级处理模块 (BPM)：**
 是 HBM 内部的实际计算单元
 每个 BPM 包含两个用于向量内积 (vector inner product) 操作的计算单元
 ![alt text](./images/image-7.png)
@@ -166,7 +169,7 @@ Bank 级处理模块 (BPM)：
 
 **•吞吐量**<br>
 <p align="center">
-  <img src="./images/image-13.png" alt="图片说明" width=400"/>
+  <img src="./images/image-27(2).png" alt="图片说明" width=350"/>
 </p>
 
 **•延迟**<br>
@@ -220,7 +223,7 @@ $B_{retrieval}\approx N_{dbvec}\cdot B_{vec}\cdot\frac{P_{scan}}{100}$
  RAG 管道的吞吐量由其最慢的阶段（瓶颈）决定 。论文中给出的 $m$ 个阶段的吞吐量公式为：
  <div align="center">
 
- $QPS_{RAG}=max(QPS_{1},QPS_{2},...,QPS_{m})$ 42
+ $QPS_{RAG}=min(QPS_{1},QPS_{2},...,QPS_{m})$ 42
 
 </div>
 
