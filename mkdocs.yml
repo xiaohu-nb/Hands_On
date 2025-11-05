@@ -50,8 +50,8 @@ plugins:
       type: date
       locale: zh
       fallback_to_build_date: true
-      #enable_creation_date: true
-      enable_modification_date: true
+      enable_creation_date: true
+      #enable_modification_date: true
 
 # Markdown 扩展配置 (开启各种强大功能)
 markdown_extensions:
