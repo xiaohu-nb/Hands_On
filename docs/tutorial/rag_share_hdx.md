@@ -164,22 +164,22 @@ TPM 是 AccelHBM 的“大脑”和“本地计算单元”，其内部的功能
 | OnlyDIMM | 仅 DIMM-PIM 方案   | 大容量、近存储计算特性 |
 
 <p style="text-align:center">
-  <img src="./images_rag/image-9.png" alt="图片说明" width="400"/>
+  <img src="./images_rag/image-9.png" alt="图片说明" style="width:400px;"/>
 </p>
 
 **•吞吐量**<br>
 <p style="text-align:center">
-  <img src="./images_rag/image-27(2).png" alt="图片说明" width="350"/>
+  <img src="./images_rag/image-27(2).png" alt="图片说明" style="width:350px;"/>
 </p>
 
 **•延迟**<br>
 <p style="text-align:center">
-  <img src="./images_rag/image-10.png" alt="图片说明" width="400"/>
+  <img src="./images_rag/image-10.png" alt="图片说明" style="width:400px;"/>
 </p><br>
 
 **•能效**
 <p style="text-align:center">
-  <img src="./images_rag/image-14.png" alt="图片说明" width="400"/>
+  <img src="./images_rag/image-14.png" alt="图片说明" wstyle="width:400px;"/>
 </p>
 <br>
 
@@ -261,17 +261,17 @@ RAG 的瓶颈是动态变化的
 Case I (超大规模检索)： 瓶颈是检索 (Retrieval) 。当使用 8B LLM 时，检索占了 80% 以上的时间 。
 
 <p style="text-align:center">
-  <img src="./images_rag/image-21.png" alt="图片说明" width="600"/>
+  <img src="./images_rag/image-21.png" alt="图片说明" style="width:600px;"/>
 </p>
 Case II (长上下文处理)： 瓶颈不是检索（占比 < 1%），而是数据库编码 (Database Encode) 。一个 120M 的编码器模型，由于要处理的 Token 太多，其开销甚至超过了 70B 的 LLM 。
 <p style="text-align:center">
-  <img src="./images_rag/image-20.png" alt="图片说明" width="600"/>
+  <img src="./images_rag/image-20.png" alt="图片说明" style="width:600px;"/>
 </p>
 
 Case III (迭代检索)： 瓶颈在于解码阶段的空闲 (idleness) 。解码器需要暂停，等待凑齐一个批次的迭代检索请求，导致 TPOT（每 Token 延迟）大幅增加 。
 
 <p style="text-align:center">
-  <img src="./images_rag/image-19.png" alt="图片说明" width="350"/>
+  <img src="./images_rag/image-19.png" alt="图片说明" style="width:350px;"/>
 </p>
 
 ![alt text](./images_rag/image-22.png)
