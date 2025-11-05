@@ -1,4 +1,4 @@
-![alt text](./images/image-24(2).png)
+![alt text](./images_rag/image-24(2).png)
 # HeterRAG 异构 PIM 加速 RAG 系统
 ## 1.&nbsp;   研究背景
 
@@ -22,12 +22,12 @@ RAG面临问题挑战：
 > 基于 **DIMM** 的 PIM：DIMM 采用 DDR 芯片的二维布局，从而降低制造成本，使用户能够以实惠的价格获得大容量内存。  
 > 基于 **HBM** 的 PIM：HBM 采用 3D 堆叠结构，通过 TSV 垂直连接，带来高带宽、低延迟和低功耗，但制造成本较高。
 
-![alt text](./images/image-1.png)<br>
+![alt text](./images_rag_rag/image-1.png)<br>
 
 
 ## 2.&nbsp;HeterRAG Architecture
 
-![alt text](./images/image-3.png)
+![alt text](./images_rag_rag/image-3.png)
 
 1.主机(Host):<br>
 分配“检索”任务给 AccelDIMM，“生成”任务给 AccelHBM
@@ -69,7 +69,7 @@ AccelDIMM 专为 ANNS（近似最近邻搜索）操作设计。ANNS 包含多个
 2.卸载的任务：<br>
 **• 距离计算**: 这是 ANNS 中计算最密集且最易并行的部分。因此，内存卸载严格限制 (restricted) 在此操作。
 ### 2. 整体架构
-![<alt text>](./images/image-25(2).png)<br>
+![<alt text>](./images_rag_rag/image-25(2).png)<br>
 **1.顶层处理模块 (Top-level Processing Module)**<br>
 TPM 是 AccelDIMM 的总控制中心，负责管理整个 ANNS 流程。
 构成主要包含指令队列、指令解码器 和 功能块 (FB)。
@@ -82,7 +82,7 @@ PIM 扩展：集成了 PIM 扩展模块，用于处理 地址映射 和 PIM 指�
 执行存内计算的核心硬件。<br>
 关键设计决策 (Rank-level vs. Bank-level)：Bank 级部署计算,将导致大量计算资源空闲和更高的面积开销。因此，本设计选择在**Rank 级**（更大的内存单元）部署距离计算模块，以提高效率。
 
-![alt text](./images/image-5.png)
+![alt text](./images_rag_rag/image-5.png)
 
 **(a) DIMM 级处理模块 (DPM)**<br>
 从顶层模块 (TPM) 接收 PIM 指令，然后根据指令中的“Rank ID”，将任务分发给对应的 Rank 级处理模块 (RPM)。它内部有专用缓冲区，用来临时存储所有 RPM 完成的计算结果。它以“轮询”的方式，将收集到的结果通过标准内存接口传回给 AccelDIMM 的顶层模块 (TPM) 进行排序。   
@@ -104,7 +104,7 @@ GEMV 具有**低算术强度**,是典型的“内存带宽受限”操作,完全
 TPM 是 AccelHBM 的“大脑”和“本地计算单元”，其内部的功能块 (Functional Block - FB) 负责处理所有未卸载到内存的任务。<br>
 
 <p align="center">
-  <img src="./images/image-8.png" alt="图片说明" width=200"/>
+  <img src="./images_rag/image-8.png" alt="图片说明" width=200"/>
 </p>
 
 ### 3.PIM-enabled HBM <br>
@@ -118,7 +118,7 @@ TPM 是 AccelHBM 的“大脑”和“本地计算单元”，其内部的功能
 &nbsp; &nbsp; &nbsp; **Bank 级处理模块 (BPM)：**
 是 HBM 内部的实际计算单元
 每个 BPM 包含两个用于向量内积 (vector inner product) 操作的计算单元
-![alt text](./images/image-7.png)
+![alt text](./images_rag/image-7.png)
 
 ## 5.&nbsp;HeterRAG 的软件硬件协同优化与系统设计
 ### 1.RAG 系统的两大系统级瓶颈<br>
@@ -164,22 +164,22 @@ TPM 是 AccelHBM 的“大脑”和“本地计算单元”，其内部的功能
 | OnlyDIMM | 仅 DIMM-PIM 方案   | 大容量、近存储计算特性 |
 
 <p align="center">
-  <img src="./images/image-9.png" alt="图片说明" width=400"/>
+  <img src="./images_rag/image-9.png" alt="图片说明" width=400"/>
 </p>
 
 **•吞吐量**<br>
 <p align="center">
-  <img src="./images/image-27(2).png" alt="图片说明" width=350"/>
+  <img src="./images_rag/image-27(2).png" alt="图片说明" width=350"/>
 </p>
 
 **•延迟**<br>
 <p align="center">
-  <img src="./images/image-10.png" alt="图片说明" width=400"/>
+  <img src="./images_rag/image-10.png" alt="图片说明" width=400"/>
 </p><br>
 
 **•能效**
 <p align="center">
-  <img src="./images/image-14.png" alt="图片说明" width=400"/>
+  <img src="./images_rag/image-14.png" alt="图片说明" width=400"/>
 </p>
 <br>
 
@@ -232,7 +232,7 @@ RAGO 框架通过优化以下三个维度的决策来生成最优调度方案 �
 **[I] 任务放置(Task placement)：**<br>
 RAG 管道包含多个模型组件（如查询重写、重排、前缀计算等）。RAGO 决定是将这些组件并置在同一组 XPU 上，还是将它们解耦到不同的 XPU 集群上。
 
-![alt text](./images/image-15.png)<br>
+![alt text](./images_rag/image-15.png)<br>
 
 Figure 13  展示了 RAGO 的放置策略。它允许管道中相邻的阶段（如 Database Encode, ReWrite, ReRank, Prefix）进行并置 ，但 Retrieval（运行在 CPU）和 Decode（解码）阶段总是解耦的 。
 
@@ -261,22 +261,22 @@ RAG 的瓶颈是动态变化的
 Case I (超大规模检索)： 瓶颈是检索 (Retrieval) 。当使用 8B LLM 时，检索占了 80% 以上的时间 。
 
 <p align="center">
-  <img src="./images/image-21.png" alt="图片说明" width=600"/>
+  <img src="./images_rag/image-21.png" alt="图片说明" width=600"/>
 </p>
 Case II (长上下文处理)： 瓶颈不是检索（占比 < 1%），而是数据库编码 (Database Encode) 。一个 120M 的编码器模型，由于要处理的 Token 太多，其开销甚至超过了 70B 的 LLM 。
 <p align="center">
-  <img src="./images/image-20.png" alt="图片说明" width=600"/>
+  <img src="./images_rag/image-20.png" alt="图片说明" width=600"/>
 </p>
 
 Case III (迭代检索)： 瓶颈在于解码阶段的空闲 (idleness) 。解码器需要暂停，等待凑齐一个批次的迭代检索请求，导致 TPOT（每 Token 延迟）大幅增加 。
 
 <p align="center">
-  <img src="./images/image-19.png" alt="图片说明" width=350"/>
+  <img src="./images_rag/image-19.png" alt="图片说明" width=350"/>
 </p>
 
-![alt text](./images/image-22.png)
+![alt text](./images_rag/image-22.png)
 Case IV (查询重写器)： 瓶颈是查询重写器 (Query Rewriter) 导致的 TTFT（首个 Token 延迟）增加 。因为它是一个自回归模型，必须串行执行，导致 TTFT 增加了 2.4 倍 。
-![alt text](./images/image-23.png)
+![alt text](./images_rag/image-23.png)
 
 # RAGFlow 工具介绍
 开源项目地址：https://github.com/infiniflow/ragflow<br>
@@ -359,7 +359,7 @@ RAGFlow 是一个开源的 Retrieval-Augmented Generation（RAG）引擎，基�
 1. 下载并安装 **Docker Desktop for Windows**。  
    安装完成后，确保 Docker 服务已启动。
 
-![alt text](./images/image-24.png)
+![alt text](./images_rag/image-24.png)
 ---
 
 ### 🔹 步骤 2：启动 RAGFlow 服务
@@ -371,11 +371,11 @@ RAGFlow 是一个开源的 Retrieval-Augmented Generation（RAG）引擎，基�
    docker compose up -d
    docker logs -f ragflow-server
 
-![alt text](./images/image-25.png)
+![alt text](./images_rag/image-25.png)
 ### 🔹 步骤 3：访问 UI 界面
 
 1. 复制终端输出中的访问网址。
 
 2. 在浏览器中打开即可进入 RAGFlow 的 Web UI。<br>
 
-![alt text](./images/image-26.png)
+![alt text](./images_rag/image-26.png)
