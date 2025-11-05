@@ -22,12 +22,12 @@ RAG面临问题挑战：
 > 基于 **DIMM** 的 PIM：DIMM 采用 DDR 芯片的二维布局，从而降低制造成本，使用户能够以实惠的价格获得大容量内存。  
 > 基于 **HBM** 的 PIM：HBM 采用 3D 堆叠结构，通过 TSV 垂直连接，带来高带宽、低延迟和低功耗，但制造成本较高。
 
-![alt text](./images_rag_rag/image-1.png)<br>
+![alt text](./images_rag/image-1.png)<br>
 
 
 ## 2.&nbsp;HeterRAG Architecture
 
-![alt text](./images_rag_rag/image-3.png)
+![alt text](./images_rag/image-3.png)
 
 1.主机(Host):<br>
 分配“检索”任务给 AccelDIMM，“生成”任务给 AccelHBM
@@ -69,7 +69,7 @@ AccelDIMM 专为 ANNS（近似最近邻搜索）操作设计。ANNS 包含多个
 2.卸载的任务：<br>
 **• 距离计算**: 这是 ANNS 中计算最密集且最易并行的部分。因此，内存卸载严格限制 (restricted) 在此操作。
 ### 2. 整体架构
-![<alt text>](./images_rag_rag/image-25(2).png)<br>
+![<alt text>](./images_rag/image-25(2).png)<br>
 **1.顶层处理模块 (Top-level Processing Module)**<br>
 TPM 是 AccelDIMM 的总控制中心，负责管理整个 ANNS 流程。
 构成主要包含指令队列、指令解码器 和 功能块 (FB)。
@@ -82,7 +82,7 @@ PIM 扩展：集成了 PIM 扩展模块，用于处理 地址映射 和 PIM 指�
 执行存内计算的核心硬件。<br>
 关键设计决策 (Rank-level vs. Bank-level)：Bank 级部署计算,将导致大量计算资源空闲和更高的面积开销。因此，本设计选择在**Rank 级**（更大的内存单元）部署距离计算模块，以提高效率。
 
-![alt text](./images_rag_rag/image-5.png)
+![alt text](./images_rag/image-5.png)
 
 **(a) DIMM 级处理模块 (DPM)**<br>
 从顶层模块 (TPM) 接收 PIM 指令，然后根据指令中的“Rank ID”，将任务分发给对应的 Rank 级处理模块 (RPM)。它内部有专用缓冲区，用来临时存储所有 RPM 完成的计算结果。它以“轮询”的方式，将收集到的结果通过标准内存接口传回给 AccelDIMM 的顶层模块 (TPM) 进行排序。   
