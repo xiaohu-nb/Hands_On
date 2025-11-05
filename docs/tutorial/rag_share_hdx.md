@@ -1,4 +1,4 @@
-![alt text](./images_rag/image-24(2).png)
+![image-24(2)](./images_rag/image-24%282%29.png)
 # HeterRAG 异构 PIM 加速 RAG 系统
 ## 1.&nbsp;   研究背景
 
@@ -22,12 +22,12 @@ RAG面临问题挑战：
 > 基于 **DIMM** 的 PIM：DIMM 采用 DDR 芯片的二维布局，从而降低制造成本，使用户能够以实惠的价格获得大容量内存。  
 > 基于 **HBM** 的 PIM：HBM 采用 3D 堆叠结构，通过 TSV 垂直连接，带来高带宽、低延迟和低功耗，但制造成本较高。
 
-![alt text](./images_rag/image-1.png)<br>
+![image-1](./images_rag/image-1.png)
 
 
 ## 2.&nbsp;HeterRAG Architecture
 
-![alt text](./images_rag/image-3.png)
+![image-3](./images_rag/image-3.png)
 
 1.主机(Host):<br>
 分配“检索”任务给 AccelDIMM，“生成”任务给 AccelHBM
@@ -69,7 +69,7 @@ AccelDIMM 专为 ANNS（近似最近邻搜索）操作设计。ANNS 包含多个
 2.卸载的任务：<br>
 **• 距离计算**: 这是 ANNS 中计算最密集且最易并行的部分。因此，内存卸载严格限制 (restricted) 在此操作。
 ### 2. 整体架构
-![<alt text>](./images_rag/image-25(2).png)<br>
+![image-25(2)](./images_rag/image-25%282%29.png)
 **1.顶层处理模块 (Top-level Processing Module)**<br>
 TPM 是 AccelDIMM 的总控制中心，负责管理整个 ANNS 流程。
 构成主要包含指令队列、指令解码器 和 功能块 (FB)。
@@ -82,7 +82,7 @@ PIM 扩展：集成了 PIM 扩展模块，用于处理 地址映射 和 PIM 指�
 执行存内计算的核心硬件。<br>
 关键设计决策 (Rank-level vs. Bank-level)：Bank 级部署计算,将导致大量计算资源空闲和更高的面积开销。因此，本设计选择在**Rank 级**（更大的内存单元）部署距离计算模块，以提高效率。
 
-![alt text](./images_rag/image-5.png)
+![image-5](./images_rag/image-5.png)
 
 **(a) DIMM 级处理模块 (DPM)**<br>
 从顶层模块 (TPM) 接收 PIM 指令，然后根据指令中的“Rank ID”，将任务分发给对应的 Rank 级处理模块 (RPM)。它内部有专用缓冲区，用来临时存储所有 RPM 完成的计算结果。它以“轮询”的方式，将收集到的结果通过标准内存接口传回给 AccelDIMM 的顶层模块 (TPM) 进行排序。   
@@ -103,9 +103,7 @@ GEMV 具有**低算术强度**,是典型的“内存带宽受限”操作,完全
 ### 2.顶层处理模块 (Top-level Processing Module)
 TPM 是 AccelHBM 的“大脑”和“本地计算单元”，其内部的功能块 (Functional Block - FB) 负责处理所有未卸载到内存的任务。<br>
 
-<p style="text-align:center">
-  <img src="./images_rag/image-8.png" alt="图片说明" width="200"/>
-</p>
+![image-8](./images_rag/image-8.png)
 
 ### 3.PIM-enabled HBM <br>
 负责存储模型权重、KV 缓存，并在内存中就地执行 GEMV。<br>
@@ -118,7 +116,7 @@ TPM 是 AccelHBM 的“大脑”和“本地计算单元”，其内部的功能
 &nbsp; &nbsp; &nbsp; **Bank 级处理模块 (BPM)：**
 是 HBM 内部的实际计算单元
 每个 BPM 包含两个用于向量内积 (vector inner product) 操作的计算单元
-![alt text](./images_rag/image-7.png)
+![image-7](./images_rag/image-7.png)
 
 ## 5.&nbsp;HeterRAG 的软件硬件协同优化与系统设计
 ### 1.RAG 系统的两大系统级瓶颈<br>
@@ -163,25 +161,16 @@ TPM 是 AccelHBM 的“大脑”和“本地计算单元”，其内部的功能
 | NaiveHBM | 仅 HBM-PIM 方案    | 高带宽内存加速计算   |
 | OnlyDIMM | 仅 DIMM-PIM 方案   | 大容量、近存储计算特性 |
 
-<p style="text-align:center">
-  <img src="./images_rag/image-9.png" alt="图片说明" style="width:400px;"/>
-</p>
+![image-9](./images_rag/image-9.png)
 
-**•吞吐量**<br>
-<p style="text-align:center">
-  <img src="./images_rag/image-27(2).png" alt="图片说明" style="width:350px;"/>
-</p>
+**•吞吐量**  
+![image-27(2)](./images_rag/image-27%282%29.png)
 
-**•延迟**<br>
-<p style="text-align:center">
-  <img src="./images_rag/image-10.png" alt="图片说明" style="width:400px;"/>
-</p><br>
+**•延迟**  
+![image-10](./images_rag/image-10.png)
 
-**•能效**
-<p style="text-align:center">
-  <img src="./images_rag/image-14.png" alt="图片说明" wstyle="width:400px;"/>
-</p>
-<br>
+**•能效**  
+![image-14](./images_rag/image-14.png)
 
 
 
@@ -206,33 +195,30 @@ RAGSchema 是 RAGO 框架的基础，是一个结构化和模块化的抽象 ，
 **[I]推理组件 (Inference)：**<br>
 对于一个模型大小为 $M$、序列长度为 $L$ 的推理任务（$L$ 较短时），其计算量 (FLOPs) 约等于：
 
-<div align="center">
-
-$FLOPs_{inference}\approx2 \cdot M \cdot L$ 
-
-</div>
+$$
+\mathrm{FLOPs}_{\text{inference}} \approx 2 \cdot M \cdot L
+$$
 
 
-**[II]检索组件 (Retrieval)：**<br> 检索工作负载由每个查询访问的数据库向量字节数来近似描述。给定 $N_{dbvec}$ 个数据库向量，每个向量 $B_{vec}$ 字节，每个查询扫描 $P_{scan}$ 百分比的向量，总字节数约等于：<br>
-<div align="center">
+**[II]检索组件 (Retrieval)：**<br> 检索工作负载由每个查询访问的数据库向量字节数来近似描述。给定 $N_{dbvec}$ 个数据库向量，每个向量 $B_{vec}$ 字节，每个查询扫描 $P_{scan}$ 百分比的向量，总字节数约等于：
 
-$B_{retrieval}\approx N_{dbvec}\cdot B_{vec}\cdot\frac{P_{scan}}{100}$ 
-</div>
+$$
+B_{\text{retrieval}} \approx N_{dbvec}\cdot B_{vec}\cdot \frac{P_{scan}}{100}
+$$
 
 **[III]端到端吞吐量 (End-to-end RAG performance)：**<br>
- RAG 管道的吞吐量由其最慢的阶段（瓶颈）决定 。论文中给出的 $m$ 个阶段的吞吐量公式为：
- <div align="center">
+ RAG 管道的吞吐量由其最慢的阶段（瓶颈）决定。论文中给出的 $m$ 个阶段的吞吐量公式为：
 
- $QPS_{RAG}=min(QPS_{1},QPS_{2},...,QPS_{m})$ 42
-
-</div>
+$$
+QPS_{\text{RAG}} = \min\big(QPS_{1}, QPS_{2}, \dots, QPS_{m}\big)
+$$
 
 ### 3.2&nbsp;RAGO 调度决策(RAGO Scheduling Decisions)<br>
 RAGO 框架通过优化以下三个维度的决策来生成最优调度方案 ：<br>
 **[I] 任务放置(Task placement)：**<br>
 RAG 管道包含多个模型组件（如查询重写、重排、前缀计算等）。RAGO 决定是将这些组件并置在同一组 XPU 上，还是将它们解耦到不同的 XPU 集群上。
 
-![alt text](./images_rag/image-15.png)<br>
+![image-15](./images_rag/image-15.png)
 
 Figure 13  展示了 RAGO 的放置策略。它允许管道中相邻的阶段（如 Database Encode, ReWrite, ReRank, Prefix）进行并置 ，但 Retrieval（运行在 CPU）和 Decode（解码）阶段总是解耦的 。
 
@@ -260,23 +246,17 @@ RAGO 通过一个三步的穷举搜索过程  来找到最优调度：
 RAG 的瓶颈是动态变化的
 Case I (超大规模检索)： 瓶颈是检索 (Retrieval) 。当使用 8B LLM 时，检索占了 80% 以上的时间 。
 
-<p style="text-align:center">
-  <img src="./images_rag/image-21.png" alt="图片说明" style="width:600px;"/>
-</p>
+![image-21](./images_rag/image-21.png)
 Case II (长上下文处理)： 瓶颈不是检索（占比 < 1%），而是数据库编码 (Database Encode) 。一个 120M 的编码器模型，由于要处理的 Token 太多，其开销甚至超过了 70B 的 LLM 。
-<p style="text-align:center">
-  <img src="./images_rag/image-20.png" alt="图片说明" style="width:600px;"/>
-</p>
+![image-20](./images_rag/image-20.png)
 
 Case III (迭代检索)： 瓶颈在于解码阶段的空闲 (idleness) 。解码器需要暂停，等待凑齐一个批次的迭代检索请求，导致 TPOT（每 Token 延迟）大幅增加 。
 
-<p style="text-align:center">
-  <img src="./images_rag/image-19.png" alt="图片说明" style="width:350px;"/>
-</p>
+![image-19](./images_rag/image-19.png)
 
-![alt text](./images_rag/image-22.png)
+![image-22](./images_rag/image-22.png)
 Case IV (查询重写器)： 瓶颈是查询重写器 (Query Rewriter) 导致的 TTFT（首个 Token 延迟）增加 。因为它是一个自回归模型，必须串行执行，导致 TTFT 增加了 2.4 倍 。
-![alt text](./images_rag/image-23.png)
+![image-23](./images_rag/image-23.png)
 
 # RAGFlow 工具介绍
 开源项目地址：https://github.com/infiniflow/ragflow<br>
@@ -359,7 +339,7 @@ RAGFlow 是一个开源的 Retrieval-Augmented Generation（RAG）引擎，基�
 1. 下载并安装 **Docker Desktop for Windows**。  
    安装完成后，确保 Docker 服务已启动。
 
-![alt text](./images_rag/image-24.png)
+![image-24](./images_rag/image-24.png)
 ---
 
 ### 🔹 步骤 2：启动 RAGFlow 服务
@@ -367,15 +347,16 @@ RAGFlow 是一个开源的 Retrieval-Augmented Generation（RAG）引擎，基�
 1. 进入项目所在文件夹。  
 2. 顺序执行以下命令：
 
-   ```bash
-   docker compose up -d
-   docker logs -f ragflow-server
+```bash
+docker compose up -d
+docker logs -f ragflow-server
+```
 
-![alt text](./images_rag/image-25.png)
+![image-25](./images_rag/image-25.png)
 ### 🔹 步骤 3：访问 UI 界面
 
 1. 复制终端输出中的访问网址。
 
 2. 在浏览器中打开即可进入 RAGFlow 的 Web UI。<br>
 
-![alt text](./images_rag/image-26.png)
+![image-26](./images_rag/image-26.png)
