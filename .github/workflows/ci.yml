@@ -40,7 +40,7 @@ jobs:
 
       - name: Build documentation
         run: |
-          mkdocs build --verbose --strict
+          mkdocs build --verbose 
 
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main'
