@@ -93,7 +93,7 @@ nav:
     - 3. 科研与写作: tutorial/research_and_writing.md
     - 4. 模型压缩与VLSI优化: tutorial/model_compression_vlsi.md
     - 5. 体系结构顶会: tutorial/arch_conferences.md
-    - 6. RAG: tutorial/rag_share_hdx.md
+    - RAG: tutorial/rag_share_hdx.md
   - 协作指南:
     - Git 协作流程: collaboration/git_workflow.md
 
