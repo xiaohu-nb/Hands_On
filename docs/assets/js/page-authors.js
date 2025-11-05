@@ -115,35 +115,35 @@ async function getPageMetadata(fileName) {
         console.warn('Failed to fetch real contributors, using mock data:', error);
     }
     
-    // 使用模拟数据作为后备
-    const mockData = {
-        'index.md': {
-            lastModified: '2024年9月23日',
-            created: '2024年9月22日',
-            authors: [
-                { name: 'chaochao825', percentage: '73.79%', avatar: 'https://github.com/chaochao825.png', url: 'https://github.com/chaochao825' },
-                { name: 'contributor2', percentage: '25.24%', avatar: 'https://github.com/contributor2.png', url: 'https://github.com/contributor2' },
-                { name: 'contributor3', percentage: '0.97%', avatar: 'https://github.com/contributor3.png', url: 'https://github.com/contributor3' }
-            ]
-        },
-        'tutorial/index.md': {
-            lastModified: '2024年9月23日',
-            created: '2024年9月23日',
-            authors: [
-                { name: 'chaochao825', percentage: '85.5%', avatar: 'https://github.com/chaochao825.png', url: 'https://github.com/chaochao825' },
-                { name: 'contributor2', percentage: '14.5%', avatar: 'https://github.com/contributor2.png', url: 'https://github.com/contributor2' }
-            ]
-        }
-    };
+    // // 使用模拟数据作为后备
+    // const mockData = {
+    //     'index.md': {
+    //         lastModified: '2024年9月23日',
+    //         created: '2024年9月22日',
+    //         authors: [
+    //             { name: 'chaochao825', percentage: '73.79%', avatar: 'https://github.com/chaochao825.png', url: 'https://github.com/chaochao825' },
+    //             { name: 'contributor2', percentage: '25.24%', avatar: 'https://github.com/contributor2.png', url: 'https://github.com/contributor2' },
+    //             { name: 'contributor3', percentage: '0.97%', avatar: 'https://github.com/contributor3.png', url: 'https://github.com/contributor3' }
+    //         ]
+    //     },
+    //     'tutorial/index.md': {
+    //         lastModified: '2024年9月23日',
+    //         created: '2024年9月23日',
+    //         authors: [
+    //             { name: 'chaochao825', percentage: '85.5%', avatar: 'https://github.com/chaochao825.png', url: 'https://github.com/chaochao825' },
+    //             { name: 'contributor2', percentage: '14.5%', avatar: 'https://github.com/contributor2.png', url: 'https://github.com/contributor2' }
+    //         ]
+    //     }
+    // };
     
     // 返回对应页面的数据，如果没有则返回默认数据
-    return mockData[fileName] || {
-        lastModified: '2024年9月23日',
-        created: '2024年9月23日',
-        authors: [
-            { name: 'chaochao825', percentage: '100%', avatar: 'https://github.com/chaochao825.png', url: 'https://github.com/chaochao825' }
-        ]
-    };
+    // return mockData[fileName] || {
+    //     lastModified: '2024年9月23日',
+    //     created: '2024年9月23日',
+    //     authors: [
+    //         { name: 'chaochao825', percentage: '100%', avatar: 'https://github.com/chaochao825.png', url: 'https://github.com/chaochao825' }
+    //     ]
+    // };
 }
 
 // 从 GitHub API 获取真实的贡献者数据
